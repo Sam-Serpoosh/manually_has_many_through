@@ -2,5 +2,8 @@ This is a short and simple manual implementation of rails
 has_many :through association. As you can see it's so much more
 expressive and straightforward and less confusing.
 
+This is an association for user model which has Followers and 
+Following (similar to Twitter idea for user associations).
+
 sometimes these little things can add to the readability and 
 understandability of the code so much.
