@@ -2,26 +2,26 @@ class User < ActiveRecord::Base
 
   attr_accessible :name, :email
 
-  has_many :following, :class_name => "Relationship", :foreign_key => "follower_id"
-  has_many :followers, :class_name => "Relationship", :foreign_key => "followed_id"
+  has_many :following_relationships, :class_name => "Relationship", :foreign_key => "follower_id"
+  has_many :followers_relationships, :class_name => "Relationship", :foreign_key => "followed_id"
 
   def follow!(user)
-    self.following << Relationship.new(:follower => self, :followed => user)
+    following_relationships << Relationship.new(:follower => self, :followed => user)
   end
 
   def unfollow!(user)
-    relationship = following.find_by_followed_id(user.id)
-    following.delete(relationship)
-    user.followers.delete(relationship)
+    relationship = following_relationships.find_by_followed_id(user.id)
+    following_relationships.delete(relationship)
+    user.followers_relationships.delete(relationship)
     relationship.destroy
   end
 
-  def following_users
-    following.map(&:followed)
+  def following
+    following_relationships.map(&:followed)
   end
 
-  def followers_users
-    followers.map(&:follower)
+  def followers
+    followers_relationships.map(&:follower)
   end
 
 end
